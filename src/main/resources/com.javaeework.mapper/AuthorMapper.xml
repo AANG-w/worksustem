@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javaee.work.mapper.AuthorMapper">
+    <resultMap id="AuthorMap" type="com.javaee.work.po.Author">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="bio" column="bio"/>
+    </resultMap>
+
+    <select id="selectAllAuthors" resultMap="AuthorMap">
+        SELECT * FROM author;
+    </select>
+
+    <insert id="insertAuthor" parameterType="com.javaee.work.po.Author">
+        INSERT INTO author(id, name, bio)
+        VALUES(#{id}, #{name}, #{bio});
+    </insert>
+
+    <delete id="deleteAuthor" parameterType="String">
+        DELETE FROM author WHERE id = #{id};
+    </delete>
+
+    <update id="updateAuthor" parameterType="com.javaee.work.po.Author">
+        UPDATE author
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="bio != null and bio != ''">
+                bio = #{bio},
+            </if>
+        </set>
+        WHERE id = #{id};
+    </update>
+
+    <select id="selectAuthorStuByid" parameterType="String" resultMap="AuthorMap">
+        SELECT * FROM author WHERE id = #{id};
+    </select>
+</mapper>>

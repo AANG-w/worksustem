@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javaee.work.mapper.WorkMapper">
+    <resultMap id="WorkMap" type="com.javaee.work.po.Work">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="categoryId" column="categoryId"/>
+        <result property="authorId" column="authorId"/>
+        <result property="description" column="description"/>
+    </resultMap>
+
+    <select id="selectWorks" resultMap="WorkMap">
+        SELECT * FROM work;
+    </select>
+
+    <insert id="insertWork" parameterType="com.javaee.work.po.Work">
+        INSERT INTO work(id, title, categoryId, authorId, description)
+        VALUES(#{id}, #{title}, #{categoryId}, #{authorId}, #{description});
+    </insert>
+
+    <delete id="deleteWork" parameterType="String">
+        DELETE FROM work WHERE id = #{id};
+    </delete>
+
+    <update id="updateWork" parameterType="com.javaee.work.po.Work">
+        UPDATE work
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="categoryId != null">
+                categoryId = #{categoryId},
+            </if>
+            <if test="authorId != null">
+                authorId = #{authorId},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+        </set>
+        WHERE id = #{id};
+    </update>
+</mapper>

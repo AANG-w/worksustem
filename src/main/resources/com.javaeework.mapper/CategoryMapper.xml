@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javaee.work.mapper.CategoryMapper">
+    <resultMap id="CategoryMap" type="com.javaee.work.po.Category">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+
+    <select id="selectCategoryByid" parameterType="Integer" resultMap="CategoryMap">
+        SELECT * FROM category WHERE id = #{id};
+    </select>
+
+    <insert id="insertCategory" parameterType="com.javaee.work.po.Category">
+        INSERT INTO category(id, name)
+        VALUES(#{id}, #{name});
+    </insert>
+
+    <delete id="deleteCategory" parameterType="String">
+        DELETE FROM category WHERE id = #{id};
+    </delete>
+
+    <update id="updateCategory" parameterType="com.javaee.work.po.Category">
+        UPDATE category
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+        </set>
+        WHERE id = #{id};
+    </update>
+
+    <select id="selectAllCategories" resultMap="CategoryMap">
+        SELECT * FROM category;
+    </select>
+</mapper>
